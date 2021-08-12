@@ -10,7 +10,7 @@ class PageProduct(BasePage):
         price_product = self.browser.find_element(*AddBasketPageLocators.PRICE_PRODUCT).text
         add_basket = self.browser.find_element(*AddBasketPageLocators.BUTTON_BASKET)
         add_basket.click()
-        self.solve_quiz_and_get_code()
+        # self.solve_quiz_and_get_code()
         self.check_add_product( name_product, price_product )
 
 
@@ -20,5 +20,17 @@ class PageProduct(BasePage):
         
         price = self.browser.find_element(*AddBasketPageLocators.PRICE_BASKET).text
         print(price, "\n", price_product)
-        assert price == price_product, f"добавленная цена  {price} не соответсвует исходной {price_product}"
+        assert price == price_product,       f"добавленная цена  {price} не соответсвует исходной {price_product}"
+
+    def message_disappeared_after_adding_product_to_basket(self):
+        assert self.is_disappeared(*AddBasketPageLocators.MESSAGE_SUCCES), \
+         "Success message is presented, but should not be"
+    
+    def cant_see_success_message(self):
+        assert self.is_not_element_present(*AddBasketPageLocators.MESSAGE_SUCCES), \
+         "Success message is presented, but should not be"
+
+    def cant_see_success_message_after_adding_product_to_basket(self):
+        assert self.is_not_element_present(*AddBasketPageLocators.MESSAGE_SUCCES), \
+         "Success message is presented, but should not be"
         
